@@ -8,9 +8,24 @@ public class SpeechManager : MonoBehaviour
     KeywordRecognizer keywordRecognizer = null;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
 
+    bool placing = false;
+    bool placingSD = false;
+    bool placingPT = false;
+
+    public GameObject SD = null;
+    public GameObject PT = null;
+
     // Use this for initialization
     void Start()
     {
+        if (SD == null)
+        {
+            SD = this.transform.Find("MX2+").gameObject;
+        }
+        if (PT == null)
+        {
+            PT = this.transform.Find("PT").gameObject;
+        }
         keywords.Add("Reset world", () =>
         {
             // Call the OnReset method on every descendant object.
@@ -27,6 +42,31 @@ public class SpeechManager : MonoBehaviour
             }
         });
 
+        keywords.Add("Place Scene", () =>
+        {
+            this.BroadcastMessage("OnPlaceScene");
+        });
+
+        keywords.Add("Increase Size", () =>
+        {
+            this.BroadcastMessage("OnIncreaseSize");
+        });
+
+        keywords.Add("Decrease Size", () =>
+        {
+            this.BroadcastMessage("OnDecreaseSize");
+        });
+
+        keywords.Add("Place Smart Drive", () =>
+        {
+            this.BroadcastMessage("OnPlaceSmartDrive");
+        });
+
+        keywords.Add("Place Push Tracker", () =>
+        {
+            this.BroadcastMessage("OnPlacePushTracker");
+        });
+
         // Tell the KeywordRecognizer about our keywords.
         keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());
 
@@ -41,6 +81,143 @@ public class SpeechManager : MonoBehaviour
         if (keywords.TryGetValue(args.text, out keywordAction))
         {
             keywordAction.Invoke();
+        }
+    }
+
+    // Called by GazeGestureManager when the user performs a Select gesture
+    void OnPlaceScene()
+    {
+        // On each Select gesture, toggle whether the user is in placing mode.
+        placing = !placing;
+
+        // If the user is in placing mode, display the spatial mapping mesh.
+        if (placing)
+        {
+            SpatialMapping.Instance.DrawVisualMeshes = true;
+        }
+        // If the user is not in placing mode, hide the spatial mapping mesh.
+        else
+        {
+            SpatialMapping.Instance.DrawVisualMeshes = false;
+        }
+    }
+
+    // Called by GazeGestureManager when the user performs a Select gesture
+    void OnPlaceSmartDrive()
+    {
+        // On each Select gesture, toggle whether the user is in placing mode.
+        placingSD = !placingSD;
+
+        // If the user is in placing mode, display the spatial mapping mesh.
+        if (placingSD)
+        {
+            SpatialMapping.Instance.DrawVisualMeshes = true;
+        }
+        // If the user is not in placing mode, hide the spatial mapping mesh.
+        else
+        {
+            SpatialMapping.Instance.DrawVisualMeshes = false;
+        }
+    }
+
+    // Called by GazeGestureManager when the user performs a Select gesture
+    void OnPlacePushTracker()
+    {
+        // On each Select gesture, toggle whether the user is in placing mode.
+        placingPT = !placingPT;
+
+        // If the user is in placing mode, display the spatial mapping mesh.
+        if (placingPT)
+        {
+            SpatialMapping.Instance.DrawVisualMeshes = true;
+        }
+        // If the user is not in placing mode, hide the spatial mapping mesh.
+        else
+        {
+            SpatialMapping.Instance.DrawVisualMeshes = false;
+        }
+    }
+
+    void OnIncreaseSize()
+    {
+        SD.transform.localScale *= 2f;
+        PT.transform.localScale *= 2f;
+    }
+
+    void OnDecreaseSize()
+    {
+        SD.transform.localScale /= 2f;
+        PT.transform.localScale /= 2f;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // If the user is in placing mode,
+        // update the placement to match the user's gaze.
+
+        if (placing)
+        {
+            // Do a raycast into the world that will only hit the Spatial Mapping mesh.
+            var headPosition = Camera.main.transform.position;
+            var gazeDirection = Camera.main.transform.forward;
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
+                30.0f, SpatialMapping.PhysicsRaycastMask))
+            {
+                // Move this object's parent object to
+                // where the raycast hit the Spatial Mapping mesh.
+                this.transform.position = hitInfo.point;
+
+                // Rotate this object's parent object to face the user.
+                Quaternion toQuat = Camera.main.transform.localRotation;
+                toQuat.x = 0;
+                toQuat.z = 0;
+                this.transform.rotation = toQuat;
+            }
+        }
+        else if (placingSD)
+        {
+            // Do a raycast into the world that will only hit the Spatial Mapping mesh.
+            var headPosition = Camera.main.transform.position;
+            var gazeDirection = Camera.main.transform.forward;
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
+                30.0f, SpatialMapping.PhysicsRaycastMask))
+            {
+                // Move this object's parent object to
+                // where the raycast hit the Spatial Mapping mesh.
+                SD.transform.position = hitInfo.point;
+
+                // Rotate this object's parent object to face the user.
+                Quaternion toQuat = Camera.main.transform.localRotation;
+                toQuat.x = 0;
+                toQuat.z = 0;
+                SD.transform.rotation = toQuat;
+            }
+        }
+        else if (placingPT)
+        {
+            // Do a raycast into the world that will only hit the Spatial Mapping mesh.
+            var headPosition = Camera.main.transform.position;
+            var gazeDirection = Camera.main.transform.forward;
+
+            RaycastHit hitInfo;
+            if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,
+                30.0f, SpatialMapping.PhysicsRaycastMask))
+            {
+                // Move this object's parent object to
+                // where the raycast hit the Spatial Mapping mesh.
+                PT.transform.position = hitInfo.point;
+
+                // Rotate this object's parent object to face the user.
+                Quaternion toQuat = Camera.main.transform.localRotation;
+                toQuat.x = 0;
+                toQuat.z = 0;
+                PT.transform.rotation = toQuat;
+            }
         }
     }
 }
