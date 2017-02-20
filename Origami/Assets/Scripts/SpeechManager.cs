@@ -44,27 +44,27 @@ public class SpeechManager : MonoBehaviour
 
         keywords.Add("Place Scene", () =>
         {
-            this.BroadcastMessage("OnPlaceScene");
+            OnPlaceScene();
         });
 
         keywords.Add("Increase Size", () =>
         {
-            this.BroadcastMessage("OnIncreaseSize");
+            OnIncreaseSize();
         });
 
         keywords.Add("Decrease Size", () =>
         {
-            this.BroadcastMessage("OnDecreaseSize");
+            OnDecreaseSize();
         });
 
         keywords.Add("Place Smart Drive", () =>
         {
-            this.BroadcastMessage("OnPlaceSmartDrive");
+            OnPlaceSmartDrive();
         });
 
         keywords.Add("Place Push Tracker", () =>
         {
-            this.BroadcastMessage("OnPlacePushTracker");
+            OnPlacePushTracker();
         });
 
         // Tell the KeywordRecognizer about our keywords.
@@ -140,14 +140,14 @@ public class SpeechManager : MonoBehaviour
 
     void OnIncreaseSize()
     {
-        SD.transform.localScale *= 2f;
-        PT.transform.localScale *= 2f;
+        iTween.ScaleBy(SD, Vector3.one * 2.0f, 1.0f);
+        iTween.ScaleBy(PT, Vector3.one * 2.0f, 1.0f);
     }
 
     void OnDecreaseSize()
     {
-        SD.transform.localScale /= 2f;
-        PT.transform.localScale /= 2f;
+        iTween.ScaleBy(SD, Vector3.one * 0.5f, 1.0f);
+        iTween.ScaleBy(PT, Vector3.one * 0.5f, 1.0f);
     }
 
     // Update is called once per frame
