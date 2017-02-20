@@ -711,20 +711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a709b4c792cd2684897b94c38a3da1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!64 &1482993453
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1482993450}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Convex: 1
-  m_InflateMesh: 1
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 0}
 --- !u!1001 &1682633520
 Prefab:
   m_ObjectHideFlags: 0
@@ -823,7 +809,7 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!1 &1854624035 stripped
 GameObject:
-  m_PrefabParentObject: {fileID: 100098, guid: db73348f6dfb231479ad284d2b1bdcbb, type: 3}
+  m_PrefabParentObject: {fileID: 100100, guid: db73348f6dfb231479ad284d2b1bdcbb, type: 3}
   m_PrefabInternal: {fileID: 1854624034}
 --- !u!64 &1854624036
 MeshCollider:
@@ -838,7 +824,7 @@ MeshCollider:
   m_Convex: 1
   m_InflateMesh: 1
   m_SkinWidth: 0.001
-  m_Mesh: {fileID: 4300086, guid: db73348f6dfb231479ad284d2b1bdcbb, type: 3}
+  m_Mesh: {fileID: 4300088, guid: db73348f6dfb231479ad284d2b1bdcbb, type: 3}
 --- !u!1001 &1968281001
 Prefab:
   m_ObjectHideFlags: 0
@@ -912,16 +898,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a709b4c792cd2684897b94c38a3da1f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1968281005 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100002, guid: a74e6947ed60c7043a942b2543a8c2fd, type: 3}
-  m_PrefabInternal: {fileID: 1968281001}
---- !u!64 &1968281006
+--- !u!64 &1968281005
 MeshCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1968281005}
+  m_GameObject: {fileID: 1968281003}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -929,7 +911,7 @@ MeshCollider:
   m_Convex: 1
   m_InflateMesh: 1
   m_SkinWidth: 0.001
-  m_Mesh: {fileID: 4300000, guid: a74e6947ed60c7043a942b2543a8c2fd, type: 3}
+  m_Mesh: {fileID: 4300004, guid: a74e6947ed60c7043a942b2543a8c2fd, type: 3}
 --- !u!1001 &2095470438
 Prefab:
   m_ObjectHideFlags: 0
